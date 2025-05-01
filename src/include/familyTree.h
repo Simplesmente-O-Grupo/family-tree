@@ -9,11 +9,12 @@ typedef struct FamilyTree
     char lastName[100];
     int birth;
     int birthDeath;
-    struct FamilyTree *father;    /* Pointer to father, the first must be initate as NULL */
-    struct FamilyTree *children;  /* Pointer to Array of children */
-    struct FamilyTree *sibling;   /* Linked List */
-    char specialDescription[300]; /* Special description about person 299 + \0 */
-    int childrenCount;            /* Children quantity */
+    struct FamilyTree *father;      /* Pointer to father, the first must be initate as NULL */
+    struct FamilyTree *children;    /* Pointer to Array of children */
+    struct FamilyTree *nextBrother; /* Linked List */
+    char specialDescription[300];   /* Special description about person 299 + \0 */
+    int childrenCount;              /* Children quantity */
+    bool lifeStatus;
 } FamilyTree;
 
 #endif
