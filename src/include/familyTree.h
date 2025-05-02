@@ -7,8 +7,8 @@ typedef struct FamilyTree
     char firstName[100]; /* Firt Name of Person */
     char middleName[100];
     char lastName[100];
-    int birth;
-    int birthDeath;
+    int dateOfBirth;
+    int dateOfDeath;
     struct FamilyTree *father;      /* Pointer to father, the first must be initate as NULL */
     struct FamilyTree *children;    /* Pointer to Array of children */
     struct FamilyTree *nextBrother; /* Linked List */
