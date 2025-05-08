@@ -21,7 +21,7 @@ Person *createPerson(int id, char *firstName, char *middleName, char *lastName, 
 	person->isAlive = isAlive;
 	person->parent = NULL;
 	person->children = NULL;
-	person->nextBrother = NULL;
+	person->nextSibling = NULL;
 
 	return person;
 }

@@ -17,7 +17,7 @@ typedef struct Person
 	bool isAlive;
     struct Person *parent;      /* Pointer to parent, the first must be initate as NULL */
     struct Person *children;    /* Pointer to Array of children */
-    struct Person *nextBrother; /* Linked List */
+    struct Person *nextSibling; /* Linked List */
 } Person;
 
 
