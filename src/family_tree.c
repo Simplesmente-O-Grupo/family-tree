@@ -25,3 +25,13 @@ Person *createPerson(int id, char *firstName, char *middleName, char *lastName, 
 
 	return person;
 }
+
+void addChild(Person *parent, Person *child) {
+	/* Unir o filho ao pai */
+	child->parent = parent;
+
+	/* Unir o pai ao filho */
+	Person *sibling = parent->children;
+	parent->children = child;
+	child->nextSibling = sibling;
+}

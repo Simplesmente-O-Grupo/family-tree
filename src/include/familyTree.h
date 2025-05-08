@@ -20,5 +20,8 @@ typedef struct Person
     struct Person *nextSibling; /* Linked List */
 } Person;
 
+Person *createPerson(int id, char *firstName, char *middleName, char *lastName, char *description, int dateOfBirth, int dateOfDeath, bool isAlive);
+
+void addChild(Person *parent, Person *child);
 
 #endif
