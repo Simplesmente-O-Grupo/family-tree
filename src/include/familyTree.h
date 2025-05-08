@@ -2,13 +2,16 @@
 #define FAMILY_TREE_H
 #include <stdbool.h>
 
+#define MAX_NAME_LEN 100
+#define MAX_DESC_LEN 300
+
 typedef struct Person
 {
     int id;              /* Unique identifier.*/
-    char firstName[100]; /* Firt Name of Person */
-    char middleName[100];
-    char lastName[100];
-    char description[300];   /* Special description about person 299 + \0 */
+    char firstName[MAX_NAME_LEN]; /* Firt Name of Person */
+    char middleName[MAX_NAME_LEN];
+    char lastName[MAX_NAME_LEN];
+    char description[MAX_DESC_LEN];   /* Special description about person 299 + \0 */
     int dateOfBirth;
     int dateOfDeath;
 	bool isAlive;
