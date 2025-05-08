@@ -19,7 +19,7 @@ Person *createPerson(int id, char *firstName, char *middleName, char *lastName, 
 	person->dateOfBirth = dateOfBirth;
 	person->dateOfDeath = dateOfDeath;
 	person->isAlive = isAlive;
-	person->father = NULL;
+	person->parent = NULL;
 	person->children = NULL;
 	person->nextBrother = NULL;
 

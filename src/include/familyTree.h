@@ -15,9 +15,10 @@ typedef struct Person
     int dateOfBirth;
     int dateOfDeath;
 	bool isAlive;
-    struct Person *father;      /* Pointer to father, the first must be initate as NULL */
+    struct Person *parent;      /* Pointer to parent, the first must be initate as NULL */
     struct Person *children;    /* Pointer to Array of children */
     struct Person *nextBrother; /* Linked List */
 } Person;
+
 
 #endif
