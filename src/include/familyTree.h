@@ -25,5 +25,6 @@ Person *createPerson(int id, char *firstName, char *middleName, char *lastName, 
 
 void addChild(Person *parent, Person *child);
 void removePerson(Person *root);
+void printTree(Person *root);
 
 #endif

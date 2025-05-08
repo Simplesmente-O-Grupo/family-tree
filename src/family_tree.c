@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 Person *createPerson(int id, char *firstName, char *middleName, char *lastName, char *description, int dateOfBirth, int dateOfDeath, bool isAlive) {
 	Person *person = malloc(sizeof (Person));
@@ -57,4 +58,26 @@ void removePerson(Person *root) {
 
 	/* Remover a pessoa */
 	free(root);
+}
+
+static void _printTree(Person *root, int level) {
+	/* Caso base: a raíz não existe */
+	if (root == NULL) return;
+
+	/* Caso geral: imprimir com base no nível */
+	printf("ID: %d | ", root->id);
+	for (int i = 0; i < level; i++) {
+		putchar('\t');
+	}
+	printf("%s %s %s\n", root->firstName, root->middleName, root->lastName);
+
+	/* Imprimir os filhos */
+	_printTree(root->children, level + 1);
+
+	/* Imprimir os irmãos */
+	_printTree(root->nextSibling, level);
+}
+
+void printTree(Person *root) {
+	_printTree(root, 0);
 }
