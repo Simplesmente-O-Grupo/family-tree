@@ -75,9 +75,14 @@ int main() {
 
 	printTree(joseph);
 
+	printf("Removendo algumas pessoas...   ");
+	removePerson(holly);
+	assert(josuke->nextSibling == NULL);
+	printf("SUCESSO!\n");
+
+	printTree(joseph);
+
 	free(joseph);
-	free(holly);
 	free(josuke);
-	free(jotaro);
 	return 0;
 }

@@ -39,3 +39,22 @@ void addChild(Person *parent, Person *child) {
 		sibling->prevSibling = child;
 	}
 }
+
+void removePerson(Person *root) {
+	/* Caso base: A pessoa não existe */
+	if (root == NULL) return;
+
+	/* Ajustar a lista de irmãos */
+	if (root->prevSibling != NULL) {
+		root->prevSibling->nextSibling = root->nextSibling;
+	}
+	if (root->nextSibling != NULL) {
+		root->nextSibling->prevSibling = root->prevSibling;
+	}
+
+	/* Remover os filhos */
+	removePerson(root->children);
+
+	/* Remover a pessoa */
+	free(root);
+}

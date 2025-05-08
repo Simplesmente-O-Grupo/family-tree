@@ -24,5 +24,6 @@ typedef struct Person
 Person *createPerson(int id, char *firstName, char *middleName, char *lastName, char *description, int dateOfBirth, int dateOfDeath, bool isAlive);
 
 void addChild(Person *parent, Person *child);
+void removePerson(Person *root);
 
 #endif
