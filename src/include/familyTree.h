@@ -18,6 +18,7 @@ typedef struct Person
     struct Person *parent;      /* Pointer to parent, the first must be initate as NULL */
     struct Person *children;    /* Pointer to Array of children */
     struct Person *nextSibling; /* Linked List */
+	struct Person *prevSibling; 
 } Person;
 
 Person *createPerson(int id, char *firstName, char *middleName, char *lastName, char *description, int dateOfBirth, int dateOfDeath, bool isAlive);

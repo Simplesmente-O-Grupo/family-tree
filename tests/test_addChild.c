@@ -53,20 +53,24 @@ int main() {
 	assert(joseph->children->nextSibling == holly);
 	assert(joseph->children->nextSibling->nextSibling == NULL);
 	assert(joseph->nextSibling == NULL);
+	assert(joseph->prevSibling == NULL);
 
 	assert(josuke->parent == joseph);
 	assert(josuke->nextSibling == holly);
 	assert(josuke->nextSibling->nextSibling == NULL);
+	assert(josuke->prevSibling == NULL);
 	assert(josuke->children == NULL);
 
 	assert(holly->parent == joseph);
 	assert(holly->nextSibling == NULL);
 	assert(holly->children == jotaro);
 	assert(holly->children->nextSibling == NULL);
+	assert(holly->prevSibling == josuke);
 
 	assert(jotaro->parent == holly);
 	assert(jotaro->nextSibling == NULL);
 	assert(jotaro->children == NULL);
+	assert(jotaro->prevSibling == NULL);
 	printf("SUCESSO!\n");
 
 	printTree(joseph);

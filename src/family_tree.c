@@ -22,6 +22,7 @@ Person *createPerson(int id, char *firstName, char *middleName, char *lastName, 
 	person->parent = NULL;
 	person->children = NULL;
 	person->nextSibling = NULL;
+	person->prevSibling = NULL;
 
 	return person;
 }
@@ -34,4 +35,7 @@ void addChild(Person *parent, Person *child) {
 	Person *sibling = parent->children;
 	parent->children = child;
 	child->nextSibling = sibling;
+	if (sibling != NULL) {
+		sibling->prevSibling = child;
+	}
 }
