@@ -1,20 +1,20 @@
 #ifndef FAMILY_TREE_H // include protection.
 #define FAMILY_TREE_H
+#include <stdbool.h>
 
-typedef struct FamilyTree
+typedef struct Person
 {
     int id;              /* Unique identifier.*/
     char firstName[100]; /* Firt Name of Person */
     char middleName[100];
     char lastName[100];
+    char description[300];   /* Special description about person 299 + \0 */
     int dateOfBirth;
     int dateOfDeath;
-    struct FamilyTree *father;      /* Pointer to father, the first must be initate as NULL */
-    struct FamilyTree *children;    /* Pointer to Array of children */
-    struct FamilyTree *nextBrother; /* Linked List */
-    char specialDescription[300];   /* Special description about person 299 + \0 */
-    int childrenCount;              /* Children quantity */
-    bool lifeStatus;
-} FamilyTree;
+	bool isAlive;
+    struct Person *father;      /* Pointer to father, the first must be initate as NULL */
+    struct Person *children;    /* Pointer to Array of children */
+    struct Person *nextBrother; /* Linked List */
+} Person;
 
 #endif
