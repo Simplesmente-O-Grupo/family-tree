@@ -1,12 +1,12 @@
 #include <stdio.h>
 
-#include "../include/states.h"
+#include "../include/context.h"
 #include "../include/ui_utils.h"
 
 static void printLogo(void);
 static void printMenu();
 
-void mainMenuScreen(State *appState) {
+void mainMenuScreen(Context *ctx) {
 	int option, ret;
 	do {
 		printMenu();
@@ -18,15 +18,15 @@ void mainMenuScreen(State *appState) {
 
 	switch(option) {
 		case 1:
-			*appState = NEW_TREE;
+			ctx->screenState = NEW_TREE;
 			break;
 
 		case 2:
-			*appState = IMPORT_SAVED_DATA;
+			ctx->screenState = IMPORT_SAVED_DATA;
 			break;
 
 		case 3:
-			*appState = EXIT;
+			ctx->screenState = EXIT;
 			break;
 	}
 }

@@ -1,17 +1,18 @@
 #include <stdio.h>
 
-#include "include/states.h"
+#include "include/context.h"
 
 #include "include/main-menu-screen.h"
 
 
 int main() {
-	State appState = MAIN_MENU;
+	Context appContext;
+	appContext.screenState = MAIN_MENU;
 
-	while (appState != EXIT) {
-		switch(appState) {
+	while (appContext.screenState != EXIT) {
+		switch(appContext.screenState) {
 			case MAIN_MENU:
-			mainMenuScreen(&appState);
+			mainMenuScreen(&appContext);
 			break;
 			case IMPORT_SAVED_DATA:
 			/* Importar os dados da aplicação */
