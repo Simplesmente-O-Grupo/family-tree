@@ -1,25 +1,58 @@
 #include "include/familyTree.h"
+#include "include/input.h"
 #include <stdbool.h>
+#include <time.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
-Person *createPerson(int id, char *firstName, char *middleName, char *lastName, char *description, int dateOfBirth, int dateOfDeath, bool isAlive) {
+Person *createPersonDialog(void) {
 	Person *person = malloc(sizeof (Person));
-	if (person == NULL) return NULL;
+	if (person == NULL) {
+		fprintf(stderr, "Não foi possível alocar memória para pessoa.\n");
+		return NULL;
+	}
 
+	struct tm time = {0};
+
+	/* Preencher dados */
+	person->id = askInt("\nID: ");
+
+	while (getchar() != '\n' && !feof(stdin));
 	/* Verificar se já existe uma pessoa com o mesmo ID */
 	/* TODO: Função para verificar Ids. */
 
-	/* Preencher dados */
-	person->id = id;
-	strncpy(person->firstName, firstName, MAX_NAME_LEN);
-	strncpy(person->middleName, middleName, MAX_NAME_LEN);
-	strncpy(person->lastName, lastName, MAX_NAME_LEN);
-	strncpy(person->description, description, MAX_NAME_LEN);
-	person->dateOfBirth = dateOfBirth;
-	person->dateOfDeath = dateOfDeath;
-	person->isAlive = isAlive;
+	printf("Nome: ");
+	getnstr(person->firstName, MAX_NAME_LEN);
+
+	printf("Nome do meio (pode ser vazio): ");
+	getnstr(person->middleName, MAX_NAME_LEN);
+
+	printf("Sobrenome: ");
+	getnstr(person->lastName, MAX_NAME_LEN);
+
+	printf("Descrição: ");
+	getnstr(person->description, MAX_NAME_LEN);
+
+	time.tm_year = askInt("Ano de nascimento: ") - 1900;
+	time.tm_mon = askInt("Digite o mês de nascimento: ") - 1;
+	time.tm_mday = askInt("Digite o dia de nascimento: ");
+
+	person->dateOfBirth = mktime(&time);
+
+	int tmp = askInt("Esta pessoa morreu? [1/0] ");
+	person->isAlive = (tmp == 0);
+	if (person->isAlive) {
+		person->dateOfDeath = -1;
+	} else {
+		struct tm timeDeath = {0};
+		timeDeath.tm_year = askInt("Ano da morte: ") - 1900;
+		timeDeath.tm_mon = askInt("Digite o mês da morte: ") - 1;
+		timeDeath.tm_mday = askInt("Digite o dia da morte: ") - 1900;
+		person->dateOfDeath = mktime(&timeDeath);
+	}
+
 	person->parent = NULL;
 	person->children = NULL;
 	person->nextSibling = NULL;

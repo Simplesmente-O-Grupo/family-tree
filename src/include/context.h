@@ -7,6 +7,7 @@ typedef enum ScreenState {
 	MAIN_MENU,
 	IMPORT_SAVED_DATA,
 	NEW_TREE,
+	TREE_MANAGER,
 	EXIT
 } ScreenState;
 

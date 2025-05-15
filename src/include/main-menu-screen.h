@@ -1,8 +1,8 @@
 #ifndef MAIN_MENU_SCREEN_H
 #define MAIN_MENU_SCREEN_H
 
-#include "states.h"
+#include "context.h"
 
-void mainMenuScreen(State *appState);
+void mainMenuScreen(Context *ctx);
 
 #endif /* MAIN_MENU_SCREEN_H */
