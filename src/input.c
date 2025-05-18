@@ -1,25 +1,32 @@
+#include "include/input.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-int askInt(char *prompt) {
-	int ret, answer;
-
-	do {
-		printf("%s", prompt);
-		ret = scanf("%d", &answer);
-	} while (ret != 1);
-
-	return answer;
+void clearInputBuffer(void)
+{
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF)
+		;
 }
 
-void getnstr(char *str, int n) {
-	int ch, acc = 0;
+int askInt(const char *prompt)
+{
+	int val;
+	printf("%s", prompt);
+	while (scanf("%d", &val) != 1)
+	{ // Loop até entrada válida
+		printf("Entrada inválida. Digite um número: ");
+		while (getchar() != '\n')
+			; // Limpa buffer
+	}
+	return val;
+}
 
-	do {
-		ch = getchar();
-
-		if (ch == '\n')
-			str[acc++] = '\0';
-		else
-			str[acc++] = ch;
-	} while (ch != '\n' && ch != EOF && acc < n);
+char *getnstr(char *str, int n)
+{
+	if (!fgets(str, n, stdin))
+		return NULL;
+	str[strcspn(str, "\n")] = '\0'; // Remove '\n' de forma segura
+	return str;
 }

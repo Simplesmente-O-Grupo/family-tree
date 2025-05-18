@@ -1,16 +1,39 @@
-#A loucura ainda está por vir.
+# Compilador
+CC = gcc
 
-CC=gcc
+# Flags de compilação
+CFLAGS = -g -Wall -Wextra -Werror -Iinclude
 
-CFLAGS=-g -Wextra -Wall -Werror 
+# Arquivos fonte
+SRCS = src/main.c \
+       src/familyTree.c \
+       src/input.c \
+       src/ui_utils.c \
+       src/main_menu_screen.c \
+       src/tree_manager_screen.c
 
-ftree: main.o
-	$(CC) ${CFLAGS} $^ -o $@
+# Arquivos objeto (gerados automaticamente)
+OBJS = $(SRCS:.c=.o)
 
-main.o: src/main.c
-	$(CC) -c $< -o $@
+# Nome do executável
+TARGET = ftree
 
+# Regra principal
+all: $(TARGET)
 
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+# Regra genérica para compilar .c em .o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Limpeza
 .PHONY: clean
 clean:
-	rm -v main.o ftree
+	rm -fv $(OBJS) $(TARGET)
+
+# Para Windows (se estiver usando cmd/PowerShell)
+.PHONY: clean-win
+clean-win:
+	del /f /q $(subst /,\,$(OBJS)) $(TARGET).exe
