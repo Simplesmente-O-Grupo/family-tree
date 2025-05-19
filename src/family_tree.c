@@ -114,3 +114,26 @@ static void _printTree(Person *root, int level) {
 void printTree(Person *root) {
 	_printTree(root, 0);
 }
+
+int countPeople(Person *root) {
+	/* Caso base: Pessoa não existe */
+	if (root == NULL) return 0;
+
+	/* Caso geral: Pessoa existe */
+	int tmp = countPeople(root->nextSibling);
+	return 1 + countPeople(root->children) + tmp;
+}
+
+Person *personById(Person *root, int id) {
+	/* Caso base: Pessoa não existe */
+	if (root == NULL) return NULL;
+	/* Caso base: Pessoa foi encontrada */
+	if (root->id == id) return root;
+
+	/* Busque pelos irmãos */
+	Person *siblings = personById(root->nextSibling, id);
+	if (siblings != NULL) return root;
+
+	/* Busque pelos filhos */
+	return personById(root->children, id);
+}
