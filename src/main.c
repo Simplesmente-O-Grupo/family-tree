@@ -4,7 +4,7 @@
 #include "include/context.h"
 #include "include/familyTree.h"
 #include "include/ui_utils.h"
-
+#include "include/tree-manager-screen.h"
 #include "include/main-menu-screen.h"
 
 
@@ -27,6 +27,7 @@ int main() {
 				appContext.screenState = TREE_MANAGER;
 			break;
 			case TREE_MANAGER:
+				treeManagerScreen(&appContext);
 			break;
 			case EXIT:
 			/* Não faz nada */
