@@ -50,7 +50,7 @@ void printTree(Person *root);
 // Funções de busca
 Person *findPersonById(Person *root, int id);
 Person **searchPersonByName(Person *root, const char *name);
-void searchPersonDialog(Person *root);
+Person **searchPersonDialog(Person *root);
 
 // Funções de hash table
 HashTable *createHashTable(int size);

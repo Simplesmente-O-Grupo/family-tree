@@ -65,8 +65,17 @@ void treeManagerScreen(Context *ctx)
             break;
         }
         case 2:
-            searchPersonDialog(ctx->treeRoot);
+        {
+            Person **result = searchPersonDialog(ctx->treeRoot);
+            if (result)
+            {
+                // Faça algo com a pessoa selecionada (result[0])
+                printf("\nPessoa selecionada: %s %s\n",
+                       result[0]->firstName, result[0]->lastName);
+                free(result);
+            }
             break;
+        }
         case 3:
             printTree(ctx->treeRoot);
             break;

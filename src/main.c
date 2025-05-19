@@ -4,7 +4,7 @@
 #include "include/familyTree.h"
 #include "include/ui_utils.h"
 #include "include/main-menu-screen.h"
-#include "include/tree-manager-screen.h" // Novo header necessário
+#include "include/tree-manager-screen.h"
 
 int main()
 {

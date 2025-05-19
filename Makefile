@@ -10,7 +10,8 @@ SRCS = src/main.c \
        src/input.c \
        src/ui_utils.c \
        src/main_menu_screen.c \
-       src/tree_manager_screen.c
+       src/tree_manager_screen.c \
+       src/main_menu
 
 # Arquivos objeto (gerados automaticamente)
 OBJS = $(SRCS:.c=.o)
