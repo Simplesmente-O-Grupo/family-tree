@@ -14,7 +14,7 @@ void mainMenuScreen(Context *ctx) {
 		ret = scanf("%d", &option);
 		while(getchar() != '\n' || feof(stdin));
 		clearScreen();
-	} while(ret != 1 || option > 2 || option < 1);
+	} while(ret != 1 || option > 3 || option < 1);
 
 	switch(option) {
 		case 1:
