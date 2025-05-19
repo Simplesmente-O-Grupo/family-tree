@@ -1,16 +1,30 @@
-#A loucura ainda está por vir.
+CC := gcc
 
-CC=gcc
+DEP_DIR := .deps
+BUILD_DIR := build
+SRC_DIR := src
 
-CFLAGS=-g -Wextra -Wall -Werror 
+SRCS := $(shell find $(SRC_DIR) -name '*.c')
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
+DEPS := $(patsubst $(SRC_DIR)/%.c,$(DEP_DIR)/%.d,$(SRCS))
 
-ftree: main.o
-	$(CC) ${CFLAGS} $^ -o $@
+TARGET := ftree
 
-main.o: src/main.c
-	$(CC) -c $< -o $@
+DEPFLAGS = -MMD -MP -MF $(patsubst $(BUILD_DIR)/%.o,$(DEP_DIR)/%.d,$@)
 
+CFLAGS := -g -Wextra -Wall -Werror 
+
+all:$(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@) $(dir $(patsubst $(BUILD_DIR)/%.o,$(DEP_DIR)/%.d,$@))
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 .PHONY: clean
 clean:
-	rm -v main.o ftree
+	rm -rfv $(BUILD_DIR) $(DEP_DIR) $(TARGET)
