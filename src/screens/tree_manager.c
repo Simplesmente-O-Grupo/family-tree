@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "json_serializer.h"
 #include "../include/context.h"
 #include "../include/familyTree.h"
 #include "../include/ui_utils.h"
 #include "../include/input.h"
+
 
 static void printMenu();
 
@@ -36,6 +38,9 @@ void treeManagerScreen(Context *appContext) {
 			break;
 			case 5:
 			break;
+			case 6:
+				SaveTreeNameUser(appContext);
+			break;
 		}
 	}
 }
@@ -43,6 +48,6 @@ void treeManagerScreen(Context *appContext) {
 static void printMenu() {
 	printf("1: Alterar pessoa 4: Selecionar pessoa\n");
 	printf("2: Remover Pessoa 5: Limpar seleção\n");
-	printf("3: Voltar\n");
+	printf("3: Voltar 6: Salvar a árvore em Jason\n");
 	printf("\n");
 }
