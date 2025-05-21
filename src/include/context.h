@@ -3,7 +3,8 @@
 
 #include "familyTree.h"
 
-typedef enum ScreenState {
+typedef enum ScreenState
+{
 	MAIN_MENU,
 	IMPORT_SAVED_DATA,
 	NEW_TREE,
@@ -11,9 +12,10 @@ typedef enum ScreenState {
 	EXIT
 } ScreenState;
 
-typedef struct Context {
+typedef struct Context
+{
 	ScreenState screenState;
-	Person *treeRoot;
+	Person *treeRoot; // Raiz da árvore genealógica
 } Context;
 
-#endif /* CONTEXT_H */
+#endif

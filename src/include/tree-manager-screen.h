@@ -1,7 +1,9 @@
 #ifndef TREE_MANAGER_SCREEN_H
 #define TREE_MANAGER_SCREEN_H
+
 #include "context.h"
 
-void treeManagerScreen(Context *appContext);
+// Menu de gerenciamento da árvore genealógica
+void treeManagerScreen(Context *ctx);
 
 #endif /* TREE_MANAGER_SCREEN_H */

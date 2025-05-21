@@ -1,7 +1,10 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-int askInt(char *prompt);
-void getnstr(char *str, int n);
+// Solicita um número inteiro ao usuário
+int askInt(const char *prompt);
 
-#endif /* INPUT_H */
+// Lê uma string com tamanho limitado
+char *getnstr(char *str, int n);
+
+#endif

@@ -3,6 +3,7 @@
 
 #include "context.h"
 
+// Exibe o menu principal e gerencia navegação
 void mainMenuScreen(Context *ctx);
 
-#endif /* MAIN_MENU_SCREEN_H */
+#endif

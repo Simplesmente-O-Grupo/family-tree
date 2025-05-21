@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include "../include/context.h"
-#include "../include/ui_utils.h"
+#include "include/context.h"
+#include "include/ui_utils.h"
 
 static void printLogo(void);
 static void printMenu();
