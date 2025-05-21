@@ -7,6 +7,18 @@
 #include "include/ui_utils.h"
 #include "include/input.h"
 
+static void removePersonDialog(Person *root) {
+	clearScreen();
+	printTree(root);
+	int id = askInt("Digite o ID da pessoa para remover: ");
+	Person *target = findPersonById(root, id);
+	if (target != NULL) {
+		removePerson(target);
+	} else {
+		printf("Pessoa não encontrada.\n");
+	}
+}
+
 /* Como esta função mantém um estado local, ela possui um loop
  * interno ao invés de voltar para main.c
  */
@@ -18,20 +30,21 @@ void treeManagerScreen(Context *appContext) {
 		clearScreen();
 		printTree(localRoot);
 		printf("\n");
-		printf("1: Alterar pessoa   4: Selecionar pessoa\n");
-		printf("2: Remover pessoa   5: Limpar seleção\n");
-		printf("3: Adicionar pessoa 6: Exibir árvore\n");
-		printf("4: Voltar           7: Buscar pessoa \n");
+		printf("1: Visualizar pessoa 5: Selecionar pessoa\n");
+		printf("2: Remover pessoa    6: Limpar seleção\n");
+		printf("3: Adicionar pessoa  7: Exibir árvore\n");
+		printf("4: Voltar            8: Buscar pessoa \n");
 
 		option = askInt("Escolha uma opção: ");
 
 		switch (option) {
 			case 1:
-			break;
+				break;
 			case 2:
-			break;
+				removePersonDialog(localRoot);
+				break;
 			case 3:
-			Person *newPerson = createPersonDialog();
+				Person *newPerson = createPersonDialog();
 				if (newPerson) {
 					int parentId = askInt("Digite o ID do pai/mãe: ");
 
@@ -48,19 +61,19 @@ void treeManagerScreen(Context *appContext) {
 					}
 				}
 
-			break;
+				break;
 			case 4:
 				appContext->screenState = MAIN_MENU;
 				removePerson(appContext->treeRoot);
-			break;
+				break;
 			case 5:
-			break;
-
-			case 6:
-				printTree(appContext->treeRoot);
-			break;
+				break;
 
 			case 7:
+				printTree(appContext->treeRoot);
+				break;
+
+			case 8:
 				Person **result = searchPersonDialog(appContext->treeRoot);
 				if (result) {
 					// Faça algo com a pessoa selecionada (result[0])
@@ -69,7 +82,7 @@ void treeManagerScreen(Context *appContext) {
 					free(result);
 				}
 
-			break;
+				break;
 			default:
 				printf("Opção Inválida.\n");
 		}
