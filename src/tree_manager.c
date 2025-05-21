@@ -19,6 +19,27 @@ static void removePersonDialog(Person *root) {
 	}
 }
 
+/* NUNCA passe a árvore global no argumento
+ * localRoot, senão a função  CAUSARÁ vazamento de meória.
+ */
+static void selectPersonDialog(Context *appContext, Person **localRoot) {
+	clearScreen();
+	printTree(*localRoot);
+
+	int id = askInt("Digite o ID da pessoa: ");
+	Person *target = findPersonById(*localRoot, id);
+
+	if (target != NULL) {
+		if (target->id == (*localRoot)->id) {
+			*localRoot = appContext->treeRoot;
+		} else {
+			*localRoot = target;
+		}
+	} else {
+		printf("Pessoa não encontrada.\n");
+	}
+}
+
 /* Como esta função mantém um estado local, ela possui um loop
  * interno ao invés de voltar para main.c
  */
@@ -67,6 +88,7 @@ void treeManagerScreen(Context *appContext) {
 				removePerson(appContext->treeRoot);
 				break;
 			case 5:
+				selectPersonDialog(appContext, &localRoot);
 				break;
 
 			case 7:
