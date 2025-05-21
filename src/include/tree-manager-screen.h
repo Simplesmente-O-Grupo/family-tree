@@ -6,4 +6,4 @@
 // Menu de gerenciamento da árvore genealógica
 void treeManagerScreen(Context *ctx);
 
-#endif
+#endif /* TREE_MANAGER_SCREEN_H */

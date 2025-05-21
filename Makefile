@@ -1,26 +1,29 @@
-# Compilador
-CC = gcc
+CC := gcc
 
-# Flags de compilação
-CFLAGS = -g -Wall -Wextra -Werror -Iinclude
+DEP_DIR := .deps
+BUILD_DIR := build
+SRC_DIR := src
 
-# Arquivos fonte
-SRCS = src/main.c \
-       src/familyTree.c \
-       src/input.c \
-       src/ui_utils.c \
-       src/main_menu_screen.c \
-       src/tree_manager_screen.c \
-       src/main_menu
+SRCS := $(shell find $(SRC_DIR) -name '*.c')
+OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
+DEPS := $(patsubst $(SRC_DIR)/%.c,$(DEP_DIR)/%.d,$(SRCS))
 
-# Arquivos objeto (gerados automaticamente)
-OBJS = $(SRCS:.c=.o)
+TARGET := ftree
 
-# Nome do executável
-TARGET = ftree
+DEPFLAGS = -MMD -MP -MF $(patsubst $(BUILD_DIR)/%.o,$(DEP_DIR)/%.d,$@)
 
-# Regra principal
-all: $(TARGET)
+CFLAGS := -g -Wextra -Wall -Werror 
+
+all:$(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@) $(dir $(patsubst $(BUILD_DIR)/%.o,$(DEP_DIR)/%.d,$@))
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -32,9 +35,4 @@ $(TARGET): $(OBJS)
 # Limpeza
 .PHONY: clean
 clean:
-	rm -fv $(OBJS) $(TARGET)
-
-# Para Windows (se estiver usando cmd/PowerShell)
-.PHONY: clean-win
-clean-win:
-	del /f /q $(subst /,\,$(OBJS)) $(TARGET).exe
+	rm -rfv $(BUILD_DIR) $(DEP_DIR) $(TARGET)

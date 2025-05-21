@@ -54,3 +54,5 @@ Mkfile.old
 dkms.conf
 
 .vscode/
+ftree
+ftree.exe

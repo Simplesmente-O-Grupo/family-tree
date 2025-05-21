@@ -461,3 +461,26 @@ Person **searchPersonDialog(Person *root)
 	free(results);
 	return selected;
 }
+
+int countPeople(Person *root) {
+	/* Caso base: Pessoa não existe */
+	if (root == NULL) return 0;
+
+	/* Caso geral: Pessoa existe */
+	int tmp = countPeople(root->nextSibling);
+	return 1 + countPeople(root->children) + tmp;
+}
+
+Person *personById(Person *root, int id) {
+	/* Caso base: Pessoa não existe */
+	if (root == NULL) return NULL;
+	/* Caso base: Pessoa foi encontrada */
+	if (root->id == id) return root;
+
+	/* Busque pelos irmãos */
+	Person *siblings = personById(root->nextSibling, id);
+	if (siblings != NULL) return root;
+
+	/* Busque pelos filhos */
+	return personById(root->children, id);
+}
