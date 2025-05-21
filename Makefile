@@ -25,13 +25,6 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 -include $(DEPS)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
-
-# Regra genérica para compilar .c em .o
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
 # Limpeza
 .PHONY: clean
 clean:
