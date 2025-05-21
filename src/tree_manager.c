@@ -74,7 +74,41 @@ void treeManagerScreen(Context *appContext)
 		switch (option)
 		{
 		case 1:
+		{
+			char *name = askString("Digite o nome da pessoa: ");
+
+			if (name == NULL)
+			{
+				printf("Erro ao ler o nome.\n");
+				break;
+			}
+
+			Person **results = searchPersonByName(appContext->treeRoot, name);
+
+			if (results && results[0] != NULL)
+			{
+				printf("\nPessoa(s) encontrada(s):\n");
+				for (int i = 0; results[i] != NULL; i++)
+				{
+					printf("ID: %d | Nome: %s %s\n",
+						   results[i]->id, results[i]->firstName, results[i]->lastName);
+				}
+				free(results); // Liberar o vetor de resultados
+			}
+			else
+			{
+				printf("Nenhuma pessoa encontrada com esse nome.\n");
+				if (results)
+				{
+					free(results); // Liberar mesmo se vazio
+				}
+			}
+
+			free(name); // Liberar a string
+			printf("\nPressione Enter para continuar...");
+			getchar(); // Pausa para o usuário ver o resultado
 			break;
+		}
 		case 2:
 			removePersonDialog(localRoot);
 			break;
