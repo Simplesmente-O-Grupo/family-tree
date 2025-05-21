@@ -4,7 +4,7 @@ DEP_DIR := .deps
 BUILD_DIR := build
 SRC_DIR := src
 
-SRCS := $(shell find $(SRC_DIR) -name '*.c')
+SRCS := $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS := $(patsubst $(SRC_DIR)/%.c,$(DEP_DIR)/%.d,$(SRCS))
 
