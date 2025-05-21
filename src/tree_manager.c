@@ -91,6 +91,10 @@ void treeManagerScreen(Context *appContext) {
 				selectPersonDialog(appContext, &localRoot);
 				break;
 
+			case 6:
+				localRoot = appContext->treeRoot;
+				break;
+
 			case 7:
 				printTree(appContext->treeRoot);
 				break;
