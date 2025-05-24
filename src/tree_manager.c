@@ -69,6 +69,7 @@ void treeManagerScreen(Context *appContext)
 		printf("2: Remover pessoa    6: Limpar seleção\n");
 		printf("3: Adicionar pessoa  7: Exibir árvore\n");
 		printf("4: Voltar            8: Buscar pessoa \n");
+		printf("9: Salvar árvore em Json\n");
 
 		option = askInt("Escolha uma opção: ");
 
