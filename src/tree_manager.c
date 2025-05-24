@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "include/json_serializer.h"
 #include "include/context.h"
 #include "include/familyTree.h"
 #include "include/ui_utils.h"
@@ -162,6 +163,9 @@ void treeManagerScreen(Context *appContext)
 			}
 		}
 		break;
+		case 9:
+			SaveTreeNameUser(appContext);
+			break;
 		default:
 			printf("Opção Inválida.\n");
 		}

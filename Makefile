@@ -12,7 +12,7 @@ TARGET := ftree
 
 DEPFLAGS = -MMD -MP -MF $(patsubst $(BUILD_DIR)/%.o,$(DEP_DIR)/%.d,$@)
 
-CFLAGS := -g -Wextra -Wall -Werror 
+CFLAGS := -g -Wextra -Wall -Werror -Isrc/include
 
 all:$(TARGET)
 
