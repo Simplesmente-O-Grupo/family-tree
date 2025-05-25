@@ -1,0 +1,25 @@
+{
+  "id": 1,
+  "firstName": "Luiz",
+  "middleName": "Gustavo ",
+  "lastName": "Monteiro",
+  "description": "Homem que procura seguir a Deus",
+  "dateOfBirth": 797828400,
+  "isAlive": true,
+  "dateOfDeath": -1,
+  "children": [
+{
+  "id": 2,
+  "firstName": "Joao ",
+  "middleName": "Oliveira",
+  "lastName": "Monteiro",
+  "description": "Filho bom",
+  "dateOfBirth": 1745550000,
+  "isAlive": true,
+  "dateOfDeath": -1,
+  "children": [
+
+  ]
+}
+  ]
+}
