@@ -1,24 +1,61 @@
 {
   "id": 1,
   "firstName": "Luiz",
-  "middleName": "Gustavo ",
+  "middleName": "Gustavo",
   "lastName": "Monteiro",
-  "description": "Homem que procura seguir a Deus",
-  "dateOfBirth": 797828400,
+  "description": "Pessoa esquisita",
+  "dateOfBirth": 796964400,
   "isAlive": true,
   "dateOfDeath": -1,
   "children": [
 {
-  "id": 2,
-  "firstName": "Joao ",
-  "middleName": "Oliveira",
-  "lastName": "Monteiro",
-  "description": "Filho bom",
-  "dateOfBirth": 1745550000,
+  "id": 3,
+  "firstName": "Judas",
+  "middleName": "",
+  "lastName": "Escariotes",
+  "description": "Traitor",
+  "dateOfBirth": -1,
+  "isAlive": true,
+  "dateOfDeath": -1,
+  "children": [
+{
+  "id": 5,
+  "firstName": "Maria ",
+  "middleName": "",
+  "lastName": "Maria",
+  "description": "Beautfiul Woman",
+  "dateOfBirth": -1,
   "isAlive": true,
   "dateOfDeath": -1,
   "children": [
 
+  ]
+}
+  ]
+},
+{
+  "id": 2,
+  "firstName": "Jaco",
+  "middleName": "",
+  "lastName": "Jaco",
+  "description": "Segurou o Anjo",
+  "dateOfBirth": -1,
+  "isAlive": false,
+  "dateOfDeath": 641876400,
+  "children": [
+{
+  "id": 4,
+  "firstName": "Joao Batista",
+  "middleName": "",
+  "lastName": "Batista",
+  "description": "Ele batizava",
+  "dateOfBirth": -1,
+  "isAlive": true,
+  "dateOfDeath": -1,
+  "children": [
+
+  ]
+}
   ]
 }
   ]
