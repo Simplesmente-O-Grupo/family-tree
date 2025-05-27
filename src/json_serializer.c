@@ -1,12 +1,16 @@
 #include <stdio.h>
-#include "json_serializer.h"
-#include "input.h"
+#include <time.h>
+#include "include/familyTree.h"
+#include "include/context.h"
+#include "include/input.h"
 
 
 // Escreve os dados da Pessoa em Jason
 static void writePersonJSON(Person *person, FILE *fp) {
-    if (person == NULL)
-        return;
+    if (person == NULL) return;
+
+	struct tm *tmpTime;
+	char tmpDate[25];
 
     fprintf(fp, "{\n");
     fprintf(fp, "  \"id\": %d,\n", person->id);
@@ -14,9 +18,17 @@ static void writePersonJSON(Person *person, FILE *fp) {
     fprintf(fp, "  \"middleName\": \"%s\",\n", person->middleName);
     fprintf(fp, "  \"lastName\": \"%s\",\n", person->lastName);
     fprintf(fp, "  \"description\": \"%s\",\n", person->description);
-    fprintf(fp, "  \"dateOfBirth\": %lld,\n", person->dateOfBirth);
+
+	tmpTime = localtime(&(person->dateOfBirth));
+	strftime(tmpDate, 25, "%Y-%m-%d", tmpTime);
+    fprintf(fp, "  \"dateOfBirth\": \"%s\",\n", tmpDate);
+
     fprintf(fp, "  \"isAlive\": %s,\n", person->isAlive ? "true" : "false");
-    fprintf(fp, "  \"dateOfDeath\": %lld,\n", person->dateOfDeath);
+
+	tmpTime = localtime(&(person->dateOfDeath));
+	strftime(tmpDate, 25, "%Y-%m-%d", tmpTime);
+    fprintf(fp, "  \"dateOfDeath\": \"%s\",\n", tmpDate);
+
     fprintf(fp, "  \"children\": [\n");
     
     //Percorre os filhos

@@ -73,102 +73,102 @@ void treeManagerScreen(Context *appContext)
 
 		option = askInt("Escolha uma opção: ");
 
-		switch (option)
-		{
-		case 1:
-		{
-			char *name = askString("Digite o nome da pessoa: ");
+		switch (option) {
+			case 1:
+				{
+					char *name = askString("Digite o nome da pessoa: ");
 
-			if (name == NULL)
-			{
-				printf("Erro ao ler o nome.\n");
+					if (name == NULL)
+					{
+						printf("Erro ao ler o nome.\n");
+						break;
+					}
+
+					Person **results = searchPersonByName(appContext->treeRoot, name);
+
+					if (results && results[0] != NULL)
+					{
+						printf("\nPessoa(s) encontrada(s):\n");
+						for (int i = 0; results[i] != NULL; i++)
+						{
+							printf("ID: %d | Nome: %s %s\n",
+			  results[i]->id, results[i]->firstName, results[i]->lastName);
+						}
+
+						free(results); // Liberar o vetor de resultados
+					}
+					else
+				{
+						printf("Nenhuma pessoa encontrada com esse nome.\n");
+						if (results)
+						{
+							free(results); // Liberar mesmo se vazio
+						}
+					}
+
+					free(name); // Liberar a string
+					printf("\nPressione Enter para continuar...");
+					getchar(); // Pausa para o usuário ver o resultado
+					break;
+				}
+			case 2:
+				removePersonDialog(localRoot);
 				break;
-			}
-
-			Person **results = searchPersonByName(appContext->treeRoot, name);
-
-			if (results && results[0] != NULL)
-			{
-				printf("\nPessoa(s) encontrada(s):\n");
-				for (int i = 0; results[i] != NULL; i++)
+			case 3:
 				{
-					printf("ID: %d | Nome: %s %s\n",
-						   results[i]->id, results[i]->firstName, results[i]->lastName);
+					Person *newPerson = createPersonDialog();
+					if (newPerson)
+					{
+						int parentId = askInt("Digite o ID do pai/mãe: ");
+
+						// Lógica para encontrar e adicionar como filho
+						Person *parent = findPersonById(appContext->treeRoot, parentId);
+						if (parent)
+						{
+							addChild(parent, newPerson);
+							printf("Pessoa adicionada com sucesso!\n");
+						}
+						else
+					{
+							printf("Pai/Mãe não encontrado.\n");
+							free(newPerson);
+						}
+					}
 				}
-				free(results); // Liberar o vetor de resultados
-			}
-			else
-			{
-				printf("Nenhuma pessoa encontrada com esse nome.\n");
-				if (results)
+				break;
+			case 4:
+				appContext->screenState = MAIN_MENU;
+				removePerson(appContext->treeRoot);
+				break;
+			case 5:
+				selectPersonDialog(appContext, &localRoot);
+				break;
+
+			case 6:
+				localRoot = appContext->treeRoot;
+				break;
+
+			case 7:
+				printTree(appContext->treeRoot);
+				break;
+
+			case 8:
 				{
-					free(results); // Liberar mesmo se vazio
+					Person **result = searchPersonDialog(appContext->treeRoot);
+					if (result)
+					{
+						// Faça algo com a pessoa selecionada (result[0])
+						printf("\nPessoa selecionada: %s %s\n",
+			 result[0]->firstName, result[0]->lastName);
+						free(result);
+					}
 				}
-			}
-
-			free(name); // Liberar a string
-			printf("\nPressione Enter para continuar...");
-			getchar(); // Pausa para o usuário ver o resultado
-			break;
-		}
-		case 2:
-			removePersonDialog(localRoot);
-			break;
-		case 3:
-		{
-			Person *newPerson = createPersonDialog();
-			if (newPerson)
-			{
-				int parentId = askInt("Digite o ID do pai/mãe: ");
-
-				// Lógica para encontrar e adicionar como filho
-				Person *parent = findPersonById(appContext->treeRoot, parentId);
-				if (parent)
-				{
-					addChild(parent, newPerson);
-					printf("Pessoa adicionada com sucesso!\n");
-				}
-				else
-				{
-					printf("Pai/Mãe não encontrado.\n");
-					free(newPerson);
-				}
-			}
-		}
-		break;
-		case 4:
-			appContext->screenState = MAIN_MENU;
-			removePerson(appContext->treeRoot);
-			break;
-		case 5:
-			selectPersonDialog(appContext, &localRoot);
-			break;
-
-		case 6:
-			localRoot = appContext->treeRoot;
-			break;
-
-		case 7:
-			printTree(appContext->treeRoot);
-			break;
-
-		case 8:
-		{
-			Person **result = searchPersonDialog(appContext->treeRoot);
-			if (result)
-			{
-				// Faça algo com a pessoa selecionada (result[0])
-				printf("\nPessoa selecionada: %s %s\n",
-					   result[0]->firstName, result[0]->lastName);
-				free(result);
-			}
-		}
-		break;
-		case 9:
-			SaveTreeNameUser(appContext);
-			break;
-		default:
-			printf("Opção Inválida.\n");
+				break;
+			case 9:
+				SaveTreeNameUser(appContext);
+				break;
+			default:
+				printf("Opção Inválida.\n");
 		}
 	}
 }
