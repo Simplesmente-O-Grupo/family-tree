@@ -7,6 +7,7 @@
 #include "include/familyTree.h"
 #include "include/ui_utils.h"
 #include "include/input.h"
+#include "include/save.h"
 
 static void removePersonDialog(Person *root)
 {
@@ -58,6 +59,8 @@ static void selectPersonDialog(Context *appContext, Person **localRoot)
 void treeManagerScreen(Context *appContext)
 {
 	int option;
+	char path[256];
+	int id;
 
 	if (appContext->selected == NULL) {
 		appContext->selected = appContext->treeRoot;
@@ -68,7 +71,7 @@ void treeManagerScreen(Context *appContext)
 	printf("\n");
 	printf("1: Visualizar pessoa 5: Selecionar pessoa\n");
 	printf("2: Remover pessoa    6: Limpar seleção\n");
-	printf("3: Adicionar pessoa  7: Exibir árvore\n");
+	printf("3: Adicionar pessoa  7: Salvar árvore\n");
 	printf("4: Voltar            8: Buscar pessoa \n");
 	printf("9: Salvar árvore em Json\n");
 
@@ -76,7 +79,7 @@ void treeManagerScreen(Context *appContext)
 
 	switch (option) {
 		case 1:
-			int id = askInt("Didite o ID da pessoa: ");
+			id = askInt("Digite o ID da pessoa: ");
 
 			Person *toEdit = findPersonById(appContext->selected, id);
 			appContext->editing = toEdit;
@@ -122,7 +125,9 @@ void treeManagerScreen(Context *appContext)
 			break;
 
 		case 7:
-			printTree(appContext->treeRoot);
+			printf("Digite o caminho do arquivo: ");
+			getnstr(path, 256);
+			saveToFile(path, appContext->treeRoot);
 			break;
 
 		case 8:

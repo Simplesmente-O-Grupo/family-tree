@@ -8,6 +8,8 @@
 #include "include/tree-manager-screen.h"
 #include "include/main-menu-screen.h"
 #include "include/tree-manager-screen.h"
+#include "include/save.h"
+#include "include/input.h"
 
 int main()
 {
@@ -16,22 +18,29 @@ int main()
 		.treeRoot = NULL // Inicializa explicitamente como NULL
 	};
 
-	while (appContext.screenState != EXIT)
-	{
-		switch (appContext.screenState)
-		{
+	while (appContext.screenState != EXIT) {
+		Person *person;
+		char path[256];
+		switch (appContext.screenState) {
 			case MAIN_MENU:
 				mainMenuScreen(&appContext);
 				break;
 
 			case IMPORT_SAVED_DATA:
-				// TODO: Implementar importação de dados
-				printf("Funcionalidade de importação não implementada ainda.\n");
-				appContext.screenState = MAIN_MENU;
+				printf("Digite o caminho do arquivo: ");
+				getnstr(path, 256);
+				
+				/* isso aqui é feio, não leia */
+				Context *hack = &appContext;
+				if (unserializeTree(path, &(hack->treeRoot))) {
+					appContext.screenState = TREE_MANAGER;
+				} else {
+					appContext.screenState = MAIN_MENU;
+				}
 				break;
 
 			case NEW_TREE:
-				Person *person = createPersonDialog();
+				person = createPersonDialog();
 				assert(person != NULL && "Falha ao criar pessoa raiz");
 				appContext.treeRoot = person;
 				appContext.screenState = TREE_MANAGER;

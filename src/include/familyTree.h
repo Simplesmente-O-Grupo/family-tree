@@ -62,5 +62,6 @@ void freeHashTable(HashTable *table);
 void displayPersonDetails(Person *person);
 bool checkIdExists(Person *root, int id);
 void countPersonsInTree(Person *root, int *count);
+int countPeople(Person *root);
 
 #endif
