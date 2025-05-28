@@ -253,13 +253,13 @@
           ${person.dateOfBirth ? `
             <div class="detail-row">
               <div class="detail-label">Data de Nascimento</div>
-              <div class="detail-value">${formatDate(person.dateOfBirth)}</div>
+              <div class="detail-value">${person.dateOfBirth}</div>
             </div>
           ` : ''}
-          ${person.dateOfDeath && person.dateOfDeath !== -1 ? `
+          ${person.dateOfDeath && !person.isAlive ? `
             <div class="detail-row">
               <div class="detail-label">Data de Falecimento</div>
-              <div class="detail-value">${formatDate(person.dateOfDeath)}</div>
+              <div class="detail-value">${person.dateOfDeath}</div>
             </div>
           ` : ''}
           <div class="detail-row">
