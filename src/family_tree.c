@@ -156,7 +156,7 @@ void removePerson(Person *person)
 }
 
 // Imprime árvore recursivamente
-static void _printTree(Person *root, int level)
+static void _printTree(Person *root, int level, bool isTop)
 {
 	if (root == NULL)
 		return;
@@ -169,13 +169,15 @@ static void _printTree(Person *root, int level)
 		   root->middleName[0] ? root->middleName : "",
 		   root->lastName);
 
-	_printTree(root->children, level + 1);
-	_printTree(root->nextSibling, level);
+	_printTree(root->children, level + 1, false);
+	if (!isTop) {
+		_printTree(root->nextSibling, level, false);
+	}
 }
 
 void printTree(Person *root)
 {
-	_printTree(root, 0);
+	_printTree(root, 0, true);
 }
 
 // Cria tabela hash com tamanho dado
