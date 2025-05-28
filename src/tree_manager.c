@@ -81,7 +81,7 @@ void treeManagerScreen(Context *appContext) {
 			removePersonDialog(appContext->selected);
 			break;
 		case 3:
-			newPerson = createPersonDialog();
+			newPerson = createPersonDialog(appContext->treeRoot);
 			if (newPerson) {
 				int parentId = askInt("Digite o ID do pai/mãe: ");
 

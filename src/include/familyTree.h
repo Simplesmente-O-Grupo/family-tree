@@ -39,7 +39,7 @@ struct Person {
 };
 
 // Funções básicas
-Person *createPersonDialog(void);
+Person *createPersonDialog(Person *root);
 void addChild(Person *parent, Person *child);
 void removePerson(Person **root);
 void printTree(Person *root);

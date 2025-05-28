@@ -41,7 +41,7 @@ int main() {
 				break;
 
 			case NEW_TREE:
-				person = createPersonDialog();
+				person = createPersonDialog(appContext.treeRoot);
 				assert(person != NULL && "Falha ao criar pessoa raiz");
 				appContext.treeRoot = person;
 				appContext.screenState = TREE_MANAGER;

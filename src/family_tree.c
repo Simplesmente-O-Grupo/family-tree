@@ -19,7 +19,7 @@ bool checkIdExists(Person *root, int id) {
 }
 
 // Cria uma nova pessoa preenchendo via diálogo (implementação simplificada)
-Person *createPersonDialog(void) {
+Person *createPersonDialog(Person *root) {
 	Person *person = malloc(sizeof(Person));
 	if (!person) {
 		fprintf(stderr, "Não foi possível alocar memória para pessoa.\n");
@@ -37,7 +37,7 @@ Person *createPersonDialog(void) {
 
 		// TODO: passar a raiz global da árvore para checkIdExists
 		// Exemplo: if (checkIdExists(rootGlobal, id)) { printf("ID já existe\n"); }
-	} while (id < 0 /* || checkIdExists(rootGlobal, id) */);
+	} while (id < 0  || checkIdExists(root, id));
 
 	person->id = id;
 
