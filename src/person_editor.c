@@ -6,16 +6,6 @@
 #include "include/ui_utils.h"
 #include "include/input.h"
 
-static time_t askDate() {
-	struct tm time = {0};
-	
-	time.tm_year = askInt("Ano: ") - 1900;
-	time.tm_mon = askInt("Mês: ") - 1;
-	time.tm_mday = askInt("Dia: ");
-
-	return mktime(&time);
-}
-
 static void formatDate(char *buffer, size_t bufflen, time_t timestamp) {
 	struct tm *time = localtime(&timestamp);
 

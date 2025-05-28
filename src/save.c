@@ -10,7 +10,7 @@
 
 static SerializedPerson serializePerson(Person *person) {
 	SerializedPerson neop;
-	
+
 	neop.id = person->id;
 	strcpy(neop.firstName, person->firstName);
 	strcpy(neop.middleName, person->middleName);
@@ -30,7 +30,7 @@ static SerializedPerson serializePerson(Person *person) {
 	neop.isAlive = person->isAlive ? 1 : 0;
 
 	neop.parent = person->parent ? person->parent->id : -1;
-	
+
 	return neop;
 }
 
@@ -82,7 +82,7 @@ static bool unserializePerson(Person **root, FILE *fp) {
 	if (fread(&person, sizeof(SerializedPerson), 1, fp) < 1) {
 		return false;
 	}
-	
+
 	neop->id = person.id;
 	strcpy(neop->firstName, person.firstName);
 	strcpy(neop->middleName, person.middleName);

@@ -8,8 +8,7 @@
 #include <time.h>
 
 // Verifica se um ID já existe na árvore
-bool checkIdExists(Person *root, int id)
-{
+bool checkIdExists(Person *root, int id) {
 	if (root == NULL)
 		return false;
 
@@ -20,11 +19,9 @@ bool checkIdExists(Person *root, int id)
 }
 
 // Cria uma nova pessoa preenchendo via diálogo (implementação simplificada)
-Person *createPersonDialog(void)
-{
+Person *createPersonDialog(void) {
 	Person *person = malloc(sizeof(Person));
-	if (!person)
-	{
+	if (!person) {
 		fprintf(stderr, "Não foi possível alocar memória para pessoa.\n");
 		return NULL;
 	}
@@ -32,13 +29,11 @@ Person *createPersonDialog(void)
 	struct tm time = {0};
 	int id;
 
-	do
-	{
+	do {
 		id = -1;
 		printf("\nID (deve ser único): ");
 		scanf("%d", &id);
-		while (getchar() != '\n')
-			; // limpa buffer
+		while (getchar() != '\n'); // limpa buffer
 
 		// TODO: passar a raiz global da árvore para checkIdExists
 		// Exemplo: if (checkIdExists(rootGlobal, id)) { printf("ID já existe\n"); }
@@ -78,17 +73,13 @@ Person *createPersonDialog(void)
 	int tmp;
 	printf("Esta pessoa morreu? [1=Sim / 0=Não]: ");
 	scanf("%d", &tmp);
-	while (getchar() != '\n')
-		;
+	while (getchar() != '\n');
 
 	person->isAlive = (tmp == 0);
 
-	if (person->isAlive)
-	{
+	if (person->isAlive) {
 		person->dateOfDeath = -1;
-	}
-	else
-	{
+	} else {
 		struct tm timeDeath = {0};
 		printf("Ano da morte: ");
 		scanf("%d", &timeDeath.tm_year);
@@ -98,8 +89,7 @@ Person *createPersonDialog(void)
 		timeDeath.tm_mon -= 1;
 		printf("Dia da morte: ");
 		scanf("%d", &timeDeath.tm_mday);
-		while (getchar() != '\n')
-			;
+		while (getchar() != '\n');
 
 		person->dateOfDeath = mktime(&timeDeath);
 	}
@@ -113,16 +103,14 @@ Person *createPersonDialog(void)
 }
 
 // Adiciona filho na lista de filhos do pai (inserção no início)
-void addChild(Person *parent, Person *child)
-{
+void addChild(Person *parent, Person *child) {
 	if (!parent || !child)
 		return;
 
 	child->parent = parent;
 	child->prevSibling = NULL;
 
-	if (parent->children)
-	{
+	if (parent->children) {
 		parent->children->prevSibling = child;
 	}
 	child->nextSibling = parent->children;
@@ -130,8 +118,7 @@ void addChild(Person *parent, Person *child)
 }
 
 // Remove uma pessoa (e recursivamente seus descendentes)
-void removePerson(Person *person)
-{
+void removePerson(Person *person) {
 	if (person == NULL)
 		return;
 
@@ -145,8 +132,7 @@ void removePerson(Person *person)
 		person->nextSibling->prevSibling = person->prevSibling;
 
 	Person *child = person->children;
-	while (child)
-	{
+	while (child) {
 		Person *nextChild = child->nextSibling;
 		removePerson(child);
 		child = nextChild;
@@ -156,8 +142,7 @@ void removePerson(Person *person)
 }
 
 // Imprime árvore recursivamente
-static void _printTree(Person *root, int level, bool isTop)
-{
+static void _printTree(Person *root, int level, bool isTop) {
 	if (root == NULL)
 		return;
 
@@ -165,9 +150,9 @@ static void _printTree(Person *root, int level, bool isTop)
 		putchar('\t');
 
 	printf("ID: %d | %s %s %s\n", root->id,
-		   root->firstName,
-		   root->middleName[0] ? root->middleName : "",
-		   root->lastName);
+		root->firstName,
+		root->middleName[0] ? root->middleName : "",
+		root->lastName);
 
 	_printTree(root->children, level + 1, false);
 	if (!isTop) {
@@ -175,25 +160,21 @@ static void _printTree(Person *root, int level, bool isTop)
 	}
 }
 
-void printTree(Person *root)
-{
+void printTree(Person *root) {
 	_printTree(root, 0, true);
 }
 
 // Cria tabela hash com tamanho dado
-HashTable *createHashTable(int size)
-{
+HashTable *createHashTable(int size) {
 	HashTable *table = malloc(sizeof(HashTable));
-	if (!table)
-	{
+	if (!table) {
 		fprintf(stderr, "Erro: Não foi possível alocar tabela hash.\n");
 		return NULL;
 	}
 
 	table->size = size;
 	table->buckets = calloc(size, sizeof(HashNode *));
-	if (!table->buckets)
-	{
+	if (!table->buckets) {
 		fprintf(stderr, "Erro: Não foi possível alocar baldes.\n");
 		free(table);
 		return NULL;
@@ -202,33 +183,28 @@ HashTable *createHashTable(int size)
 }
 
 // Função hash para string (case-sensitive)
-unsigned int hashString(const char *str, int tableSize)
-{
+unsigned int hashString(const char *str, int tableSize) {
 	unsigned int hash = 0;
-	for (int i = 0; str[i]; i++)
-	{
+	for (int i = 0; str[i]; i++) {
 		hash = (hash * 31 + (unsigned char)str[i]) % tableSize;
 	}
 	return hash;
 }
 
 // Insere na tabela hash, evitando duplicatas (comparação case-sensitive)
-void insertIntoHashTable(HashTable *table, const char *name, Person *person)
-{
+void insertIntoHashTable(HashTable *table, const char *name, Person *person) {
 	if (!table || !person || !name || !name[0])
 		return;
 
 	unsigned int index = hashString(name, table->size);
 
-	for (HashNode *curr = table->buckets[index]; curr; curr = curr->next)
-	{
+	for (HashNode *curr = table->buckets[index]; curr; curr = curr->next) {
 		if (strcmp(curr->name, name) == 0 && curr->person == person)
 			return;
 	}
 
 	HashNode *newNode = malloc(sizeof(HashNode));
-	if (!newNode)
-	{
+	if (!newNode) {
 		fprintf(stderr, "Erro: Falha ao alocar nó.\n");
 		return;
 	}
@@ -241,8 +217,7 @@ void insertIntoHashTable(HashTable *table, const char *name, Person *person)
 }
 
 // Indexa os nomes da pessoa na tabela hash
-void indexPersonInHashTable(HashTable *table, Person *person)
-{
+void indexPersonInHashTable(HashTable *table, Person *person) {
 	if (!table || !person)
 		return;
 
@@ -253,8 +228,7 @@ void indexPersonInHashTable(HashTable *table, Person *person)
 }
 
 // Indexa toda a árvore na tabela hash
-void indexFamilyTreeInHashTable(Person *root, HashTable *table)
-{
+void indexFamilyTreeInHashTable(Person *root, HashTable *table) {
 	if (!root || !table)
 		return;
 
@@ -264,14 +238,12 @@ void indexFamilyTreeInHashTable(Person *root, HashTable *table)
 }
 
 // Busca na tabela hash, retorna vetor de Person* (busca substring case-sensitive)
-Person **searchInHashTable(HashTable *table, const char *searchTerm)
-{
+Person **searchInHashTable(HashTable *table, const char *searchTerm) {
 	if (!table || !searchTerm || !searchTerm[0])
 		return NULL;
 
 	Person **results = malloc(sizeof(Person *) * 101);
-	if (!results)
-	{
+	if (!results) {
 		fprintf(stderr, "Erro: Falha ao alocar resultados.\n");
 		return NULL;
 	}
@@ -281,17 +253,12 @@ Person **searchInHashTable(HashTable *table, const char *searchTerm)
 
 	int resultCount = 0;
 
-	for (int i = 0; i < table->size; i++)
-	{
-		for (HashNode *current = table->buckets[i]; current && resultCount < 100; current = current->next)
-		{
-			if (strstr(current->name, searchTerm))
-			{
+	for (int i = 0; i < table->size; i++) {
+		for (HashNode *current = table->buckets[i]; current && resultCount < 100; current = current->next) {
+			if (strstr(current->name, searchTerm)) {
 				bool alreadyAdded = false;
-				for (int j = 0; j < resultCount; j++)
-				{
-					if (results[j] == current->person)
-					{
+				for (int j = 0; j < resultCount; j++) {
+					if (results[j] == current->person) {
 						alreadyAdded = true;
 						break;
 					}
@@ -303,8 +270,7 @@ Person **searchInHashTable(HashTable *table, const char *searchTerm)
 		}
 	}
 
-	if (resultCount == 0)
-	{
+	if (resultCount == 0) {
 		free(results);
 		return NULL;
 	}
@@ -313,16 +279,13 @@ Person **searchInHashTable(HashTable *table, const char *searchTerm)
 }
 
 // Libera toda a tabela hash
-void freeHashTable(HashTable *table)
-{
+void freeHashTable(HashTable *table) {
 	if (!table)
 		return;
 
-	for (int i = 0; i < table->size; i++)
-	{
+	for (int i = 0; i < table->size; i++) {
 		HashNode *current = table->buckets[i];
-		while (current)
-		{
+		while (current) {
 			HashNode *next = current->next;
 			free(current);
 			current = next;
@@ -332,20 +295,8 @@ void freeHashTable(HashTable *table)
 	free(table);
 }
 
-// Conta pessoas na árvore
-void countPersonsInTree(Person *root, int *count)
-{
-	if (!root)
-		return;
-
-	(*count)++;
-	countPersonsInTree(root->children, count);
-	countPersonsInTree(root->nextSibling, count);
-}
-
 // Busca por nome usando tabela hash (case-sensitive)
-Person **searchPersonByName(Person *root, const char *name)
-{
+Person **searchPersonByName(Person *root, const char *name) {
 	if (!root || !name)
 		return NULL;
 
@@ -361,8 +312,7 @@ Person **searchPersonByName(Person *root, const char *name)
 }
 
 // Busca pessoa por ID (busca recursiva)
-Person *findPersonById(Person *root, int id)
-{
+Person *findPersonById(Person *root, int id) {
 	if (!root)
 		return NULL;
 
@@ -377,16 +327,15 @@ Person *findPersonById(Person *root, int id)
 }
 
 // Exibe detalhes da pessoa formatados
-void displayPersonDetails(Person *person)
-{
+void displayPersonDetails(Person *person) {
 	if (!person)
 		return;
 
 	printf("ID: %d\n", person->id);
 	printf("Nome completo: %s %s %s\n",
-		   person->firstName,
-		   person->middleName[0] ? person->middleName : "",
-		   person->lastName);
+		person->firstName,
+		person->middleName[0] ? person->middleName : "",
+		person->lastName);
 	printf("Descrição: %s\n", person->description);
 
 	char buffer[64];
@@ -398,8 +347,7 @@ void displayPersonDetails(Person *person)
 
 	if (person->isAlive)
 		printf("Status: Vivo\n");
-	else
-	{
+	else {
 		tm_info = localtime(&person->dateOfDeath);
 		strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm_info);
 		printf("Data de falecimento: %s\n", buffer);
@@ -411,10 +359,8 @@ void displayPersonDetails(Person *person)
  * @param root Raiz da árvore genealógica
  * @return Vetor de ponteiros para pessoas encontradas (deve ser liberado pelo caller)
  */
-Person **searchPersonDialog(Person *root)
-{
-	if (!root)
-	{
+Person **searchPersonDialog(Person *root) {
+	if (!root) {
 		printf("\nÁrvore vazia! Nenhuma busca pode ser realizada.\n");
 		return NULL;
 	}
@@ -426,16 +372,14 @@ Person **searchPersonDialog(Person *root)
 	// Busca usando a tabela hash (implementação existente)
 	Person **results = searchPersonByName(root, searchTerm);
 
-	if (!results)
-	{
+	if (!results) {
 		printf("\nNenhuma pessoa encontrada com o termo: '%s'\n", searchTerm);
 		return NULL;
 	}
 
 	// Exibe resultados
 	printf("\n=== RESULTADOS DA BUSCA ===\n");
-	for (int i = 0; results[i] != NULL; i++)
-	{
+	for (int i = 0; results[i] != NULL; i++) {
 		printf("\n[Resultado %d]\n", i + 1);
 		displayPersonDetails(results[i]);
 		printf("----------------------------");
@@ -443,14 +387,12 @@ Person **searchPersonDialog(Person *root)
 
 	// Menu de seleção
 	int choice;
-	do
-	{
+	do {
 		printf("\n\nDigite o número do resultado para selecionar (0 para cancelar): ");
 		choice = askInt("");
 	} while (choice < 0 || choice > 100); // Limite arbitrário seguro
 
-	if (choice == 0)
-	{
+	if (choice == 0) {
 		free(results);
 		return NULL;
 	}
@@ -471,18 +413,4 @@ int countPeople(Person *root) {
 	/* Caso geral: Pessoa existe */
 	int tmp = countPeople(root->nextSibling);
 	return 1 + countPeople(root->children) + tmp;
-}
-
-Person *personById(Person *root, int id) {
-	/* Caso base: Pessoa não existe */
-	if (root == NULL) return NULL;
-	/* Caso base: Pessoa foi encontrada */
-	if (root->id == id) return root;
-
-	/* Busque pelos irmãos */
-	Person *siblings = personById(root->nextSibling, id);
-	if (siblings != NULL) return root;
-
-	/* Busque pelos filhos */
-	return personById(root->children, id);
 }

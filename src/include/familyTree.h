@@ -12,33 +12,30 @@ typedef struct Person Person;
 typedef struct HashNode HashNode;
 typedef struct HashTable HashTable;
 
-struct HashNode
-{
-    char name[MAX_NAME_LEN];
-    Person *person;
-    HashNode *next;
+struct HashNode {
+	char name[MAX_NAME_LEN];
+	Person *person;
+	HashNode *next;
 };
 
-struct HashTable
-{
-    HashNode **buckets;
-    int size;
+struct HashTable {
+	HashNode **buckets;
+	int size;
 };
 
-struct Person
-{
-    int id;
-    char firstName[MAX_NAME_LEN];
-    char middleName[MAX_NAME_LEN];
-    char lastName[MAX_NAME_LEN];
-    char description[MAX_DESC_LEN];
-    time_t dateOfBirth;
-    time_t dateOfDeath;
-    bool isAlive;
-    Person *parent;
-    Person *children;
-    Person *nextSibling;
-    Person *prevSibling;
+struct Person {
+	int id;
+	char firstName[MAX_NAME_LEN];
+	char middleName[MAX_NAME_LEN];
+	char lastName[MAX_NAME_LEN];
+	char description[MAX_DESC_LEN];
+	time_t dateOfBirth;
+	time_t dateOfDeath;
+	bool isAlive;
+	Person *parent;
+	Person *children;
+	Person *nextSibling;
+	Person *prevSibling;
 };
 
 // Funções básicas
@@ -61,7 +58,6 @@ void freeHashTable(HashTable *table);
 // Utilitários
 void displayPersonDetails(Person *person);
 bool checkIdExists(Person *root, int id);
-void countPersonsInTree(Person *root, int *count);
 int countPeople(Person *root);
 
 #endif

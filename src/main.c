@@ -11,11 +11,12 @@
 #include "include/save.h"
 #include "include/input.h"
 
-int main()
-{
+int main() {
 	Context appContext = {
 		.screenState = MAIN_MENU,
-		.treeRoot = NULL // Inicializa explicitamente como NULL
+		.treeRoot = NULL, // Inicializa explicitamente como NULL
+		.selected = NULL,
+		.editing = NULL
 	};
 
 	while (appContext.screenState != EXIT) {
@@ -29,7 +30,7 @@ int main()
 			case IMPORT_SAVED_DATA:
 				printf("Digite o caminho do arquivo: ");
 				getnstr(path, 256);
-				
+
 				/* isso aqui é feio, não leia */
 				Context *hack = &appContext;
 				if (unserializeTree(path, &(hack->treeRoot))) {
@@ -51,13 +52,10 @@ int main()
 				break;
 
 			case TREE_MANAGER:
-				if (appContext.treeRoot == NULL)
-				{
+				if (appContext.treeRoot == NULL) {
 					printf("Erro: Árvore não inicializada\n");
 					appContext.screenState = MAIN_MENU;
-				}
-				else
-			{
+				} else {
 					treeManagerScreen(&appContext);
 				}
 				break;
@@ -73,8 +71,7 @@ int main()
 	}
 
 	// Limpeza final
-	if (appContext.treeRoot != NULL)
-	{
+	if (appContext.treeRoot != NULL) {
 		removePerson(appContext.treeRoot);
 		appContext.treeRoot = NULL;
 	}
