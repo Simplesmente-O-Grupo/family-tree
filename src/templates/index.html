@@ -218,6 +218,15 @@
       }
 
       function createPersonCard(person, isMain = false) {
+		let age = undefined;
+		if (person.dateOfBirth) {
+			let endDate = Date.now();
+			  if (!person.isAlive && person.dateOfDeath) {
+				  endDate = Date.parse(person.dateOfDeath);
+		  		}
+			age = Math.floor((endDate - Date.parse(person.dateOfBirth)) / 1000 / 60 / 60 / 24 / 365);
+		}
+		console.log(age);
         const card = document.createElement('div');
         card.className = `person-card ${isMain ? 'main-card' : ''}`;
         
@@ -250,6 +259,12 @@
               <div class="detail-value">${person.description}</div>
             </div>
           ` : ''}
+		  ${age ? `
+		  <div class="detail-row">
+			  <div class="detail-label">Idade</div>
+			  <div class="detail-value">${age}</div>
+		  </div>
+		  `:''}
           ${person.dateOfBirth ? `
             <div class="detail-row">
               <div class="detail-label">Data de Nascimento</div>
