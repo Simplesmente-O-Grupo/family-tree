@@ -15,7 +15,7 @@ static void removePersonDialog(Person *root) {
 	int id = askInt("Digite o ID da pessoa para remover: ");
 	Person *target = findPersonById(root, id);
 	if (target != NULL) {
-		removePerson(target);
+		removePerson(&target);
 	} else {
 		printf("Pessoa não encontrada.\n");
 	}
@@ -98,7 +98,7 @@ void treeManagerScreen(Context *appContext) {
 			break;
 		case 4:
 			appContext->screenState = MAIN_MENU;
-			removePerson(appContext->treeRoot);
+			removePerson(&(appContext->treeRoot));
 			break;
 		case 5:
 			selectPersonDialog(appContext, &(appContext->selected));

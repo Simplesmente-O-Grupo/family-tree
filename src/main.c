@@ -71,10 +71,7 @@ int main() {
 	}
 
 	// Limpeza final
-	if (appContext.treeRoot != NULL) {
-		removePerson(appContext.treeRoot);
-		appContext.treeRoot = NULL;
-	}
+	removePerson(&appContext.treeRoot);
 
 	return 0;
 }

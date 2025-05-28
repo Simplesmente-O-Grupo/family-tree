@@ -118,7 +118,7 @@ void addChild(Person *parent, Person *child) {
 }
 
 // Remove uma pessoa (e recursivamente seus descendentes)
-void removePerson(Person *person) {
+static void _removePerson(Person *person) {
 	if (person == NULL)
 		return;
 
@@ -134,11 +134,16 @@ void removePerson(Person *person) {
 	Person *child = person->children;
 	while (child) {
 		Person *nextChild = child->nextSibling;
-		removePerson(child);
+		_removePerson(child);
 		child = nextChild;
 	}
 
 	free(person);
+}
+
+void removePerson(Person **person) {
+	_removePerson(*person);
+	*person = NULL;
 }
 
 // Imprime árvore recursivamente

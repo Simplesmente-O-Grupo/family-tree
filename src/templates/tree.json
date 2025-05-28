@@ -1,0 +1,111 @@
+{
+  "id": 1,
+  "firstName": "George",
+  "middleName": "",
+  "lastName": "Joestar",
+  "description": "Patriarca da família Joestar",
+  "dateOfBirth": "1836-08-09",
+  "isAlive": false,
+  "dateOfDeath": "1888-04-01",
+  "children": [
+{
+  "id": 2,
+  "firstName": "Jonathan",
+  "middleName": "",
+  "lastName": "Joestar",
+  "description": "Cavalheiro",
+  "dateOfBirth": "1868-07-01",
+  "isAlive": false,
+  "dateOfDeath": "1889-10-31",
+  "children": [
+{
+  "id": 9,
+  "firstName": "Giorno",
+  "middleName": "",
+  "lastName": "Giovanna",
+  "description": "Um garoto com um sonho",
+  "dateOfBirth": "1985-06-14",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-01",
+  "children": [
+
+  ]
+},
+{
+  "id": 3,
+  "firstName": "George",
+  "middleName": "II",
+  "lastName": "Joestar",
+  "description": "A new hope",
+  "dateOfBirth": "1890-02-15",
+  "isAlive": false,
+  "dateOfDeath": "1921-07-02",
+  "children": [
+{
+  "id": 4,
+  "firstName": "Joesph",
+  "middleName": "",
+  "lastName": "Joestar",
+  "description": "O homem",
+  "dateOfBirth": "1920-12-24",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-31",
+  "children": [
+{
+  "id": 8,
+  "firstName": "Josuke",
+  "middleName": "",
+  "lastName": "Higashikata",
+  "description": "Menino com coração de ouro",
+  "dateOfBirth": "1983-10-10",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-01",
+  "children": [
+
+  ]
+},
+{
+  "id": 5,
+  "firstName": "Holly",
+  "middleName": "",
+  "lastName": "Kujo",
+  "description": "Calma, depois dela vem ELE",
+  "dateOfBirth": "1942-08-25",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-31",
+  "children": [
+{
+  "id": 6,
+  "firstName": "Jotaro",
+  "middleName": "",
+  "lastName": "Kujo",
+  "description": "ORA ORA ORA ORA ORA",
+  "dateOfBirth": "1971-06-06",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-01",
+  "children": [
+{
+  "id": 7,
+  "firstName": "Jolyne",
+  "middleName": "",
+  "lastName": "Kujo",
+  "description": "Uma das poucas mulheres que respeito.",
+  "dateOfBirth": "1992-06-01",
+  "isAlive": true,
+  "dateOfDeath": "1970-03-01",
+  "children": [
+
+  ]
+}
+  ]
+}
+  ]
+}
+  ]
+}
+  ]
+}
+  ]
+}
+  ]
+}

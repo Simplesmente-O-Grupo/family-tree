@@ -119,7 +119,7 @@ static bool unserializePerson(Person **root, FILE *fp) {
 }
 
 bool unserializeTree(char *path, Person **root) {
-	removePerson(*root);
+	removePerson(root);
 	FILE *fp = fopen(path, "rb");
 	if (fp == NULL) return false;
 

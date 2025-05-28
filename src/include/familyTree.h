@@ -41,7 +41,7 @@ struct Person {
 // Funções básicas
 Person *createPersonDialog(void);
 void addChild(Person *parent, Person *child);
-void removePerson(Person *root);
+void removePerson(Person **root);
 void printTree(Person *root);
 
 // Funções de busca
