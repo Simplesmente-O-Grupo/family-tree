@@ -91,13 +91,13 @@ static bool unserializePerson(Person **root, FILE *fp) {
 
 	struct tm time = {0};
 	sscanf(person.dateOfBirth,"%d/%d/%d", &(time.tm_mday), &(time.tm_mon), &(time.tm_year));
-	time.tm_mday -= 1;
+	time.tm_mon -= 1;
 	time.tm_year -= 1900;
 	neop->dateOfBirth = mktime(&time);
 
 	memset(&time, 0, sizeof(struct tm));
 	sscanf(person.dateOfDeath,"%d/%d/%d", &(time.tm_mday), &(time.tm_mon), &(time.tm_year));
-	time.tm_mday -= 1;
+	time.tm_mon -= 1;
 	time.tm_year -= 1900;
 	neop->dateOfDeath = mktime(&time);
 
