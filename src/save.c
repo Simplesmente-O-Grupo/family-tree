@@ -8,6 +8,9 @@
 #include "include/save.h"
 #include "include/familyTree.h"
 
+/* Converte uma pessoa para uma versão que possa ser
+ * salva em um arquivo
+ */
 static SerializedPerson serializePerson(Person *person) {
 	SerializedPerson neop;
 
@@ -34,6 +37,7 @@ static SerializedPerson serializePerson(Person *person) {
 	return neop;
 }
 
+/* converte uma árvore inteira para uma versão que possa ser salva em um arquivo. */
 static void _serializeTree(SerializedPerson *people, Person *root, int *i) {
 	/* Caso base, não tem o que salvar */
 	if (root == NULL) return;
@@ -44,6 +48,12 @@ static void _serializeTree(SerializedPerson *people, Person *root, int *i) {
 	_serializeTree(people, root->children, i);
 }
 
+/* converte uma árvore inteira para uma versão que possa ser salva em um arquivo.
+ * Esta função esconde o estado interno de _serializeTree() e também retorna um
+ * vetor de pessoas.
+ *
+ * A ordem é importante e começa pela raíz até as folhas, um nível de cada vez.
+ */
 SerializedPerson *serializeTree(Person *root, size_t *qnt) {
 	SerializedPerson *people = malloc(sizeof(SerializedPerson) * countPeople(root));
 	if (people == NULL) return NULL;
@@ -56,6 +66,9 @@ SerializedPerson *serializeTree(Person *root, size_t *qnt) {
 	return people;
 }
 
+/* Salva um vetor de pessoas em formato salvável em um arquivo definido
+ * por path
+ */
 void saveToFile(char *path, Person* root) {
 	size_t qnt;
 	SerializedPerson *people = serializeTree(root, &qnt);
@@ -74,6 +87,10 @@ void saveToFile(char *path, Person* root) {
 	free(people);
 }
 
+/* Converte uma pessoa em formato salvável para uma pessoa em
+ * formato usual.
+ * Continua fazendo isso até chegar no final do arquivo
+ */
 static bool unserializePerson(Person **root, FILE *fp) {
 	Person *neop = malloc(sizeof(Person));
 	if (neop == NULL) return false;
@@ -89,6 +106,7 @@ static bool unserializePerson(Person **root, FILE *fp) {
 	strcpy(neop->lastName, person.lastName);
 	strcpy(neop->description, person.description);
 
+	/* Converte a data de texto para timestamp */
 	struct tm time = {0};
 	sscanf(person.dateOfBirth,"%d/%d/%d", &(time.tm_mday), &(time.tm_mon), &(time.tm_year));
 	time.tm_mon -= 1;
@@ -103,14 +121,19 @@ static bool unserializePerson(Person **root, FILE *fp) {
 
 	neop->isAlive = person.isAlive ? true : false;
 
+	/* As relações serão adicionados por addChild */
 	neop->parent = NULL;
 	neop->children = NULL;
 	neop->prevSibling = NULL;
 	neop->nextSibling = NULL;
 
+	/* Se a pessoa for a raiz global, sobreescreva diretamente */
 	if (person.parent < 0) {
 		*root = neop;
 	} else {
+		/* Caso o contrário, encontre o pai e adicione-a como filho.
+		 * É por isso que a ordem em que as pessoas são salvas é importante.
+		 * É esperado que nó pai já esteja na árvore.*/
 		Person *parent = findPersonById(*root, person.parent);
 		assert(parent != NULL);
 		addChild(parent, neop);
@@ -118,6 +141,7 @@ static bool unserializePerson(Person **root, FILE *fp) {
 	return true;
 }
 
+/* Carrega um arquivo de árvore para a memória. */
 bool unserializeTree(char *path, Person **root) {
 	removePerson(root);
 	FILE *fp = fopen(path, "rb");

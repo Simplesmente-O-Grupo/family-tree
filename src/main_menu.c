@@ -6,8 +6,10 @@
 static void printLogo(void);
 static void printMenu();
 
+/* Mostra o menu principal da aplicação, */
 void mainMenuScreen(Context *ctx) {
 	int option, ret;
+	/* Continua imprimindo enquanto a resposta for inválida */
 	do {
 		printMenu();
 		printf("\nEscolha uma opção: ");
@@ -32,6 +34,7 @@ void mainMenuScreen(Context *ctx) {
 	}
 }
 
+/* Mostra as opções disponíveis */
 static void printMenu() {
 	printLogo();
 	printf("\n1: Iniciar nova árvore.\n");
@@ -39,6 +42,7 @@ static void printMenu() {
 	printf("3: Sair.\n");
 }
 
+/* Mostra o logo estilizado da aplicação */
 static void printLogo(void) {
 	printf("    ______                _ __         ______             \n");
 	printf("   / ____/___ _____ ___  (_) /_  __   /_  __/_______  ___ \n");

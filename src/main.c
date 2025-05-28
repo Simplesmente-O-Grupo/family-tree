@@ -19,6 +19,9 @@ int main() {
 		.editing = NULL
 	};
 
+	/* Exibe a tela correta de acordo com o estado
+	 * do programa.
+	 */
 	while (appContext.screenState != EXIT) {
 		Person *person;
 		char path[256];

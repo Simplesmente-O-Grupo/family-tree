@@ -7,10 +7,10 @@
 
 void clearInputBuffer(void) {
 	int c;
-	while ((c = getchar()) != '\n' && c != EOF)
-		;
+	while ((c = getchar()) != '\n' && c != EOF);
 }
 
+/* Pergunta um inteiro ao usuário */
 int askInt(const char *prompt) {
 	int val;
 	printf("%s", prompt);
@@ -22,6 +22,9 @@ int askInt(const char *prompt) {
 	return val;
 }
 
+/* Obtém uma string de no máximo n caracteres de
+ * stdin
+ */
 char *getnstr(char *str, int n) {
 	if (!fgets(str, n, stdin))
 		return NULL;
@@ -29,6 +32,9 @@ char *getnstr(char *str, int n) {
 	return str;
 }
 
+/* Pergunta uma data ao usuário e retorna uma timestamp 
+ * (hora, minuto, segundo, etc. são definidos como zero)
+ */
 time_t askDate() {
 	struct tm time = {0};
 	
@@ -39,6 +45,7 @@ time_t askDate() {
 	return mktime(&time);
 }
 
+/* pede uma string e retorna uma string alocada */
 char *askString(const char *prompt) {
 	char buffer[256];
 	printf("%s", prompt);

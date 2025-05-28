@@ -9,6 +9,7 @@
 #include "include/input.h"
 #include "include/save.h"
 
+/* Diálogo para remover uma subárvore */
 static void removePersonDialog(Person *root) {
 	clearScreen();
 	printTree(root);
@@ -21,7 +22,10 @@ static void removePersonDialog(Person *root) {
 	}
 }
 
-/* NUNCA passe a árvore global no argumento
+/* Define uma subárvore como a subárvore selecionada. Fará com que o
+ * gerenciador de árvore a trate como a raiz.
+ *
+ * NUNCA passe a raiz da árvore global no argumento
  * localRoot, senão a função  CAUSARÁ vazamento de meória.
  */
 static void selectPersonDialog(Context *appContext, Person **localRoot) {
@@ -42,14 +46,13 @@ static void selectPersonDialog(Context *appContext, Person **localRoot) {
 	}
 }
 
-/* Como esta função mantém um estado local, ela possui um loop
- * interno ao invés de voltar para main.c
- */
+/* Gerencia uma árvore genealógica */
 void treeManagerScreen(Context *appContext) {
 	int option;
 	char path[256];
 	int id;
 
+	/* A árvore global começa como a selecionada */
 	if (appContext->selected == NULL) {
 		appContext->selected = appContext->treeRoot;
 	}

@@ -5,7 +5,11 @@
 #include "include/input.h"
 
 
-// Escreve os dados da Pessoa em Jason
+/* Escreve os dados da Pessoa em JSON
+ *
+ * Essa funcionalidade serve para que seja possível visualizar a árvore
+ * em programas externos.
+ */
 static void writePersonJSON(Person *person, FILE *fp) {
 	if (person == NULL) return;
 

@@ -9,12 +9,15 @@
 
 // Verifica se um ID já existe na árvore
 bool checkIdExists(Person *root, int id) {
+	/* Caso base: não encontrado */
 	if (root == NULL)
 		return false;
 
+	/* Caso base: encontrado */
 	if (root->id == id)
 		return true;
 
+	/* Caso geral: procurando */
 	return checkIdExists(root->children, id) || checkIdExists(root->nextSibling, id);
 }
 
@@ -29,14 +32,13 @@ Person *createPersonDialog(Person *root) {
 	struct tm time = {0};
 	int id;
 
+	/* Garante que o ID seja único */
 	do {
 		id = -1;
 		printf("\nID (deve ser único): ");
 		scanf("%d", &id);
 		while (getchar() != '\n'); // limpa buffer
 
-		// TODO: passar a raiz global da árvore para checkIdExists
-		// Exemplo: if (checkIdExists(rootGlobal, id)) { printf("ID já existe\n"); }
 	} while (id < 0  || checkIdExists(root, id));
 
 	person->id = id;
@@ -57,6 +59,7 @@ Person *createPersonDialog(Person *root) {
 	fgets(person->description, MAX_DESC_LEN, stdin);
 	person->description[strcspn(person->description, "\n")] = 0;
 
+	/* Coleta os dados necessários para criar uma timestamp */
 	printf("Ano de nascimento: ");
 	scanf("%d", &time.tm_year);
 	time.tm_year -= 1900;
@@ -65,8 +68,7 @@ Person *createPersonDialog(Person *root) {
 	time.tm_mon -= 1;
 	printf("Dia de nascimento: ");
 	scanf("%d", &time.tm_mday);
-	while (getchar() != '\n')
-		; // limpa buffer
+	while (getchar() != '\n'); // limpa buffer
 
 	person->dateOfBirth = mktime(&time);
 
@@ -80,6 +82,7 @@ Person *createPersonDialog(Person *root) {
 	if (person->isAlive) {
 		person->dateOfDeath = -1;
 	} else {
+		/* A mesma coisa aqui */
 		struct tm timeDeath = {0};
 		printf("Ano da morte: ");
 		scanf("%d", &timeDeath.tm_year);
@@ -94,6 +97,7 @@ Person *createPersonDialog(Person *root) {
 		person->dateOfDeath = mktime(&timeDeath);
 	}
 
+	/* Parentesco será definido pela função addChild() */
 	person->parent = NULL;
 	person->children = NULL;
 	person->nextSibling = NULL;
@@ -110,6 +114,7 @@ void addChild(Person *parent, Person *child) {
 	child->parent = parent;
 	child->prevSibling = NULL;
 
+	/* Lista duplamente encadeada */
 	if (parent->children) {
 		parent->children->prevSibling = child;
 	}
@@ -122,15 +127,20 @@ static void _removePerson(Person *person) {
 	if (person == NULL)
 		return;
 
+	/* Se a pessoa for o primeiro filho da lista encadeada do pai */
 	if (person->parent && person->parent->children == person)
 		person->parent->children = person->nextSibling;
 
+	/* Aqui está o motivo de eu definir pessoa como uma lista duplamente
+	 * encadeada nos irmãos. Fica fácil de remover elementos no meio da lista.
+	 */
 	if (person->prevSibling)
 		person->prevSibling->nextSibling = person->nextSibling;
 
 	if (person->nextSibling)
 		person->nextSibling->prevSibling = person->prevSibling;
 
+	/* remove todos os filhos */
 	Person *child = person->children;
 	while (child) {
 		Person *nextChild = child->nextSibling;
@@ -138,6 +148,7 @@ static void _removePerson(Person *person) {
 		child = nextChild;
 	}
 
+	/* Por fim, remove a pessoa em si */
 	free(person);
 }
 
@@ -148,23 +159,28 @@ void removePerson(Person **person) {
 
 // Imprime árvore recursivamente
 static void _printTree(Person *root, int level, bool isTop) {
+	/* Caso base: Não tem o que imprimir */
 	if (root == NULL)
 		return;
 
+	/* Imprime uma pessoa de acordo com seu nível hierárquico */
 	for (int i = 0; i < level; i++)
 		putchar('\t');
-
 	printf("ID: %d | %s %s %s\n", root->id,
 		root->firstName,
 		root->middleName[0] ? root->middleName : "",
 		root->lastName);
 
+	/* É importante imprimir os filhos primeiro */
 	_printTree(root->children, level + 1, false);
+	/* Impede de imprimir os irmãos da raíz.
+	 * (No caso de impressão onde a subárvore é raiz. */
 	if (!isTop) {
 		_printTree(root->nextSibling, level, false);
 	}
 }
 
+/* Isso serve para não expor o estado interno de _printTree() */
 void printTree(Person *root) {
 	_printTree(root, 0, true);
 }
@@ -318,12 +334,15 @@ Person **searchPersonByName(Person *root, const char *name) {
 
 // Busca pessoa por ID (busca recursiva)
 Person *findPersonById(Person *root, int id) {
+	/* Caso base: Não encontrado */
 	if (!root)
 		return NULL;
 
+	/* Caso base: Encontrado */
 	if (root->id == id)
 		return root;
 
+	/* Caso geral: procurando */
 	Person *found = findPersonById(root->children, id);
 	if (found)
 		return found;
@@ -411,6 +430,7 @@ Person **searchPersonDialog(Person *root) {
 	return selected;
 }
 
+/* Conta o número de pessoas em um subárvore */
 int countPeople(Person *root) {
 	/* Caso base: Pessoa não existe */
 	if (root == NULL) return 0;
